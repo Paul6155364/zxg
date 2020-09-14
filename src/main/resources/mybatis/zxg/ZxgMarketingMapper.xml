@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.zxg.dao.ZxgMarketingDao">
+
+	<select id="get" resultType="com.bootdo.zxg.domain.ZxgMarketingDO">
+		select `id`,DATE_FORMAT(`in_date`, '%Y-%m-%d') `inDateStr`,`in_rmk`,`re_date`,`re_rmk`,`status`,`marketing_id`,`marketing_name`,`marketing_fee`,`marketing_way`,`settlement_id`,`comment` from zxg_marketing where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.zxg.domain.ZxgMarketingDO">
+		select `id`,`in_date`,`in_rmk`,`re_date`,`re_rmk`,`status`,`marketing_id`,`marketing_name`,`marketing_fee`,`marketing_way`, CASE `settlement_id`
+		WHEN `settlement_id` IS not NULL THEN
+		'已结算'
+		ELSE
+		'未结算'
+		END settlement_id,`comment` from zxg_marketing
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="inDate != null and inDate != ''"> and in_date = #{inDate} </if>
+		  		  <if test="inRmk != null and inRmk != ''"> and in_rmk = #{inRmk} </if>
+		  		  <if test="reDate != null and reDate != ''"> and re_date = #{reDate} </if>
+		  		  <if test="reRmk != null and reRmk != ''"> and re_rmk = #{reRmk} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="marketingId != null and marketingId != ''"> and marketing_id = #{marketingId} </if>
+		  		  <if test="marketingName != null and marketingName != ''"> and marketing_name = #{marketingName} </if>
+		  		  <if test="marketingFee != null and marketingFee != ''"> and marketing_fee = #{marketingFee} </if>
+		  		  <if test="marketingWay != null and marketingWay != ''"> and marketing_way = #{marketingWay} </if>
+		  		  <if test="settlementId != null and settlementId != ''"> and settlement_id = #{settlementId} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by in_date desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from zxg_marketing
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="inDate != null and inDate != ''"> and in_date = #{inDate} </if>
+		  		  <if test="inRmk != null and inRmk != ''"> and in_rmk = #{inRmk} </if>
+		  		  <if test="reDate != null and reDate != ''"> and re_date = #{reDate} </if>
+		  		  <if test="reRmk != null and reRmk != ''"> and re_rmk = #{reRmk} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="marketingId != null and marketingId != ''"> and marketing_id = #{marketingId} </if>
+		  		  <if test="marketingName != null and marketingName != ''"> and marketing_name = #{marketingName} </if>
+		  		  <if test="marketingFee != null and marketingFee != ''"> and marketing_fee = #{marketingFee} </if>
+		  		  <if test="marketingWay != null and marketingWay != ''"> and marketing_way = #{marketingWay} </if>
+		  		  <if test="settlementId != null and settlementId != ''"> and settlement_id = #{settlementId} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.zxg.domain.ZxgMarketingDO">
+		insert into zxg_marketing
+		(
+			`id`, 
+			`in_date`, 
+			`in_rmk`, 
+			`re_date`, 
+			`re_rmk`, 
+			`status`, 
+			`marketing_id`, 
+			`marketing_name`, 
+			`marketing_fee`, 
+			`marketing_way`, 
+			`settlement_id`, 
+			`comment`
+		)
+		values
+		(
+			#{id}, 
+			#{inDate}, 
+			#{inRmk}, 
+			#{reDate}, 
+			#{reRmk}, 
+			#{status}, 
+			#{marketingId}, 
+			#{marketingName}, 
+			#{marketingFee}, 
+			#{marketingWay}, 
+			#{settlementId}, 
+			#{comment}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.zxg.domain.ZxgMarketingDO">
+		update zxg_marketing 
+		<set>
+			<if test="inDate != null">`in_date` = #{inDate}, </if>
+			<if test="inRmk != null">`in_rmk` = #{inRmk}, </if>
+			<if test="reDate != null">`re_date` = #{reDate}, </if>
+			<if test="reRmk != null">`re_rmk` = #{reRmk}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="marketingId != null">`marketing_id` = #{marketingId}, </if>
+			<if test="marketingName != null">`marketing_name` = #{marketingName}, </if>
+			<if test="marketingFee != null">`marketing_fee` = #{marketingFee}, </if>
+			<if test="marketingWay != null">`marketing_way` = #{marketingWay}, </if>
+			<if test="settlementId != null">`settlement_id` = #{settlementId}, </if>
+			<if test="comment != null">`comment` = #{comment}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from zxg_marketing where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from zxg_marketing where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	<select id="getZxgMarketing" resultType="com.bootdo.zxg.domain.ZxgMarketingDO">
+		SELECT * FROM zxg_marketing WHERE in_date <![CDATA[ >= ]]> #{settlementDateStart} AND in_date <![CDATA[ <= ]]> #{settlementDateEnd} AND settlement_id is  null
+	</select>
+	<update id="updateZxgMarketing">
+		update zxg_marketing set settlement_id = #{settlementId} where in_date <![CDATA[ >= ]]> #{settlementDateStart} AND in_date <![CDATA[ <= ]]> #{settlementDateEnd} AND settlement_id is  null
+	</update>
+	<select id="getZxgMarketingName"  resultType="com.bootdo.zxg.domain.ZxgMarketingDO">
+		SELECT * FROM zxg_marketing WHERE `marketing_name` = #{marketingName}
+	</select>
+</mapper>

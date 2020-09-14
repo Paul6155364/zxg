@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="id" name="id" th:value="${zxgProfits.id}" type="hidden">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">创建时间：</label>
+                            <div class="col-sm-8">
+                                <input id="inDate" name="inDate" th:value="${zxgProfits.inDate}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">创建者：</label>
+                            <div class="col-sm-8">
+                                <input id="inRmk" name="inRmk" th:value="${zxgProfits.inRmk}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">修改日期：</label>
+                            <div class="col-sm-8">
+                                <input id="reDate" name="reDate" th:value="${zxgProfits.reDate}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">修改者：</label>
+                            <div class="col-sm-8">
+                                <input id="reRmk" name="reRmk" th:value="${zxgProfits.reRmk}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态：</label>
+                            <div class="col-sm-8">
+                                <input id="status" name="status" th:value="${zxgProfits.status}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">利润人：</label>
+                            <div class="col-sm-8">
+                                <input id="profitsName" name="profitsName" th:value="${zxgProfits.profitsName}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">利润解读：</label>
+                            <div class="col-sm-8">
+                                <input id="profitsResults" name="profitsResults" th:value="${zxgProfits.profitsResults}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">利润总费用：</label>
+                            <div class="col-sm-8">
+                                <input id="profitsFee" name="profitsFee" th:value="${zxgProfits.profitsFee}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">结算ID：</label>
+                            <div class="col-sm-8">
+                                <input id="settlementId" name="settlementId" th:value="${zxgProfits.settlementId}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">结算周期：</label>
+                            <div class="col-sm-8">
+                                <input id="settlementCycle" name="settlementCycle"
+                                       th:value="${zxgProfits.settlementCycle}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注：</label>
+                            <div class="col-sm-8">
+                                <input id="comment" name="comment" th:value="${zxgProfits.comment}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/zxg/zxgProfits/edit.js">
+</script>
+</body>
+</html>

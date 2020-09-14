@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.zxg.dao.ZxgUserDao">
+
+	<select id="get" resultType="com.bootdo.zxg.domain.ZxgUserDO">
+		select `id`,`in_date`,`in_rmk`,`re_date`,`re_rmk`,`status`,`user_id`,`user_name`,`comment` from zxg_user where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.zxg.domain.ZxgUserDO">
+		select `id`,`in_date`,`in_rmk`,`re_date`,`re_rmk`,`status`,`user_id`,`user_name`,`comment` from zxg_user
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="inDate != null and inDate != ''"> and in_date = #{inDate} </if>
+		  		  <if test="inRmk != null and inRmk != ''"> and in_rmk = #{inRmk} </if>
+		  		  <if test="reDate != null and reDate != ''"> and re_date = #{reDate} </if>
+		  		  <if test="reRmk != null and reRmk != ''"> and re_rmk = #{reRmk} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by in_date desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from zxg_user
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="inDate != null and inDate != ''"> and in_date = #{inDate} </if>
+		  		  <if test="inRmk != null and inRmk != ''"> and in_rmk = #{inRmk} </if>
+		  		  <if test="reDate != null and reDate != ''"> and re_date = #{reDate} </if>
+		  		  <if test="reRmk != null and reRmk != ''"> and re_rmk = #{reRmk} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="userName != null and userName != ''"> and user_name = #{userName} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.zxg.domain.ZxgUserDO">
+		insert into zxg_user
+		(
+			`id`, 
+			`in_date`, 
+			`in_rmk`, 
+			`re_date`, 
+			`re_rmk`, 
+			`status`, 
+			`user_id`, 
+			`user_name`, 
+			`comment`
+		)
+		values
+		(
+			#{id}, 
+			#{inDate}, 
+			#{inRmk}, 
+			#{reDate}, 
+			#{reRmk}, 
+			#{status}, 
+			#{userId}, 
+			#{userName}, 
+			#{comment}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.zxg.domain.ZxgUserDO">
+		update zxg_user 
+		<set>
+			<if test="inDate != null">`in_date` = #{inDate}, </if>
+			<if test="inRmk != null">`in_rmk` = #{inRmk}, </if>
+			<if test="reDate != null">`re_date` = #{reDate}, </if>
+			<if test="reRmk != null">`re_rmk` = #{reRmk}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="userName != null">`user_name` = #{userName}, </if>
+			<if test="comment != null">`comment` = #{comment}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from zxg_user where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from zxg_user where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	<select id="zxgUser" resultType="map">
+		select user_id,user_name from zxg_user
+	</select>
+</mapper>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">创建时间：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="layui-input form-control" id="inDate" name="inDate">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">创建者：</label>
+                            <div class="col-sm-8">
+                                <input id="inRmk" name="inRmk" class="form-control" type="text" value="猪小狗">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单ID：</label>
+                            <div class="col-sm-8">
+                                <input id="orderId" name="orderId" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单大类：</label>
+                            <div class="col-sm-8">
+                                <select data-placeholder="--订单大类--" name="orderCategories" id="orderCategories"
+                                        class="form-control chosen-select" tabindex="2" required >
+                                    <option value="">请选择</option>
+                                    <option value="0">虚假订单</option>
+                                    <option value="1">正常订单</option>
+                                    <option value="2">售后订单</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单小类：</label>
+                            <div class="col-sm-8">
+                                <select data-placeholder="--订单状态--" name="orderStatus" id="orderStatus"
+                                        class="form-control chosen-select" tabindex="2" required disabled="disabled">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单类型：</label>
+                            <div class="col-sm-8">
+                                <select data-placeholder="--订单类型--" name="orderType" id="orderType"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="0">乳清蛋白</option>
+                                    <option value="1">支链氨基酸</option>
+                                    <option value="2">左旋肉碱</option>
+                                    <option value="3">氨基酸</option>
+                                    <option value="4">谷氨酰胺</option>
+                                    <option value="5">其他膳食营养补充剂</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单品牌：</label>
+                            <div class="col-sm-8">
+                                <input id="orderBrand" name="orderBrand" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">产品名称：</label>
+                            <div class="col-sm-8">
+                                <input id="productName" name="productName" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">商品规格：</label>
+                            <div class="col-sm-8">
+                                <input id="productSpecifications" name="productSpecifications" class="form-control"
+                                       type="text" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">购买人：</label>
+                            <div class="col-sm-8">
+                                <input id="buyName" name="buyName" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">购买人电话：</label>
+                            <div class="col-sm-8">
+                                <input id="buyPhone" name="buyPhone" class="form-control" type="text" value="无">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">购买人地址：</label>
+                            <div class="col-sm-8">
+                                <input id="buyAddress" name="buyAddress" class="form-control" type="text" value="无">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">销售价格：</label>
+                            <div class="col-sm-8">
+                                <input id="salesAmount" name="salesAmount" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发货快递费：</label>
+                            <div class="col-sm-8">
+                                <input id="deliveryCourierFee" name="deliveryCourierFee" class="form-control"
+                                       type="text" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">退货快递费：</label>
+                            <div class="col-sm-8">
+                                <input id="returnCourierFee" name="returnCourierFee" class="form-control"
+                                       type="text" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额打款：</label>
+                            <div class="col-sm-8">
+                                <input id="remitSmallMoney" name="remitSmallMoney" class="form-control" type="text"
+                                       value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额打款人：</label>
+                            <div class="col-sm-8">
+                                <input id="remitSmallName" name="remitSmallName" class="form-control" type="text"  value="无">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额打款原因：</label>
+                            <div class="col-sm-8">
+                                <input id="remitSmallReason" name="remitSmallReason" class="form-control"
+                                       type="text"  value="无">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额收款：</label>
+                            <div class="col-sm-8">
+                                <input id="paySmallMoney" name="paySmallMoney" class="form-control" type="text"
+                                       value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额收款人：</label>
+                            <div class="col-sm-8">
+                                <input id="paySmallName" name="paySmallName" class="form-control" type="text"  value="无">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额收款原因：</label>
+                            <div class="col-sm-8">
+                                <input id="paySmallReason" name="paySmallReason" class="form-control" type="text" value="无">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">多多进宝比例：</label>
+                            <div class="col-sm-8">
+                                <input id="manyFeeRatio" name="manyFeeRatio" class="form-control" type="text"
+                                       value="0.01">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">其他支出费：</label>
+                            <div class="col-sm-8">
+                                <input id="otherSupport" name="otherSupport" class="form-control" type="text"
+                                       value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">其他支出原因：</label>
+                            <div class="col-sm-8">
+                                <input id="otherSupportReason" name="otherSupportReason" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">罚款：</label>
+                            <div class="col-sm-8">
+                                <input id="fine" name="fine" class="form-control" type="text" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">代理价：</label>
+                            <div class="col-sm-8">
+                                <input id="agentAmount" name="agentAmount" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">代理人：</label>
+                            <div class="col-sm-8">
+                                <select data-placeholder="--代理人--" name="agentName" id="agentName"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">货款人：</label>
+                            <div class="col-sm-8">
+                                <input id="paymentName" name="paymentName" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注：</label>
+                            <div class="col-sm-8">
+                                <input id="comment" name="comment" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#inDate' //指定元素
+        });
+    });
+</script>
+<script type="text/javascript" src="/js/appjs/zxg/zxgOrder/add.js">
+</script>
+</body>
+</html>

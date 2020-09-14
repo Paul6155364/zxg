@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="id" name="id" th:value="${zxgOrder.id}" type="hidden">
+                        <input id="settlementId" name="settlementId" th:value="${zxgOrder.settlementId}" type="hidden">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单ID：</label>
+                            <div class="col-sm-8">
+                                <input id="orderId" name="orderId" th:value="${zxgOrder.orderId}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单大类：</label>
+                            <div class="col-sm-8">
+                                <select data-placeholder="--订单大类--" name="orderCategories" id="orderCategories"
+                                        class="form-control chosen-select" tabindex="2" required >
+                                    <option value="0" th:selected="${zxgOrder.orderCategories}==0">虚假订单</option>
+                                    <option value="1" th:selected="${zxgOrder.orderCategories}==1">正常订单</option>
+                                    <option value="2" th:selected="${zxgOrder.orderCategories}==2">售后订单</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label class="col-sm-3 control-label">订单小类：</label>
+
+                            <div class="col-sm-8" >
+                                <select data-placeholder="--订单状态--" name="orderStatus" id="orderStatus"
+                                        class="form-control chosen-select" tabindex="2" required disabled="disabled">
+                                    <option value="0" th:selected="${zxgOrder.orderStatus}==0">刷单</option>
+                                    <option value="1" th:selected="${zxgOrder.orderStatus}==1">待发货</option>
+                                    <option value="2" th:selected="${zxgOrder.orderStatus}==2">已发货</option>
+                                    <option value="3" th:selected="${zxgOrder.orderStatus}==3">已签收</option>
+                                    <option value="4" th:selected="${zxgOrder.orderStatus}==4">未发货退款</option>
+                                    <option value="5" th:selected="${zxgOrder.orderStatus}==5">发货退款</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单类型：</label>
+                            <div class="col-sm-8">
+                                <select data-placeholder="--订单类型--" name="orderType" id="orderType"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="0" th:selected="${zxgOrder.orderType}==0">乳清蛋白</option>
+                                    <option value="1" th:selected="${zxgOrder.orderType}==1">支链氨基酸</option>
+                                    <option value="2" th:selected="${zxgOrder.orderType}==2">左旋肉碱</option>
+                                    <option value="3" th:selected="${zxgOrder.orderType}==3">氨基酸</option>
+                                    <option value="4" th:selected="${zxgOrder.orderType}==4">谷氨酰胺</option>
+                                    <option value="5" th:selected="${zxgOrder.orderType}==5">其他膳食营养补充剂</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单品牌：</label>
+                            <div class="col-sm-8">
+                                <input id="orderBrand" name="orderBrand" th:value="${zxgOrder.orderBrand}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">产品名称：</label>
+                            <div class="col-sm-8">
+                                <input id="productName" name="productName" th:value="${zxgOrder.productName}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">商品规格：</label>
+                            <div class="col-sm-8">
+                                <input id="productSpecifications" name="productSpecifications"
+                                       th:value="${zxgOrder.productSpecifications}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">购买人：</label>
+                            <div class="col-sm-8">
+                                <input id="buyName" name="buyName" th:value="${zxgOrder.buyName}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">购买人电话：</label>
+                            <div class="col-sm-8">
+                                <input id="buyPhone" name="buyPhone" th:value="${zxgOrder.buyPhone}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">购买人地址：</label>
+                            <div class="col-sm-8">
+                                <input id="buyAddress" name="buyAddress" th:value="${zxgOrder.buyAddress}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">销售价格：</label>
+                            <div class="col-sm-8">
+                                <input id="salesAmount" name="salesAmount" th:value="${zxgOrder.salesAmount}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发货快递费：</label>
+                            <div class="col-sm-8">
+                                <input id="deliveryCourierFee" name="deliveryCourierFee"
+                                       th:value="${zxgOrder.deliveryCourierFee}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">退货快递费：</label>
+                            <div class="col-sm-8">
+                                <input id="returnCourierFee" name="returnCourierFee"
+                                       th:value="${zxgOrder.returnCourierFee}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额打款：</label>
+                            <div class="col-sm-8">
+                                <input id="remitSmallMoney" name="remitSmallMoney"
+                                       th:value="${zxgOrder.remitSmallMoney}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额打款人：</label>
+                            <div class="col-sm-8">
+                                <input id="remitSmallName" name="remitSmallName" th:value="${zxgOrder.remitSmallName}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额打款原因：</label>
+                            <div class="col-sm-8">
+                                <input id="remitSmallReason" name="remitSmallReason"
+                                       th:value="${zxgOrder.remitSmallReason}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额收款：</label>
+                            <div class="col-sm-8">
+                                <input id="paySmallMoney" name="paySmallMoney" th:value="${zxgOrder.paySmallMoney}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额收款人：</label>
+                            <div class="col-sm-8">
+                                <input id="paySmallName" name="paySmallName" th:value="${zxgOrder.paySmallName}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小额收款原因：</label>
+                            <div class="col-sm-8">
+                                <input id="paySmallReason" name="paySmallReason" th:value="${zxgOrder.paySmallReason}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">多多进宝比例：</label>
+                            <div class="col-sm-8">
+                                <input id="manyFeeRatio" name="manyFeeRatio" th:value="${zxgOrder.manyFeeRatio}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">其他支出费：</label>
+                            <div class="col-sm-8">
+                                <input id="otherSupport" name="otherSupport" th:value="${zxgOrder.otherSupport}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">其他支出原因：</label>
+                            <div class="col-sm-8">
+                                <input id="otherSupportReason" name="otherSupportReason"
+                                       th:value="${zxgOrder.otherSupportReason}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">罚款：</label>
+                            <div class="col-sm-8">
+                                <input id="fine" name="fine" th:value="${zxgOrder.fine}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">代理价：</label>
+                            <div class="col-sm-8">
+                                <input id="agentAmount" name="agentAmount" th:value="${zxgOrder.agentAmount}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">代理人：</label>
+                            <div class="col-sm-8">
+                                <input id="agentNameEdit" name="agentNameEdit" th:value="${zxgOrder.agentName}"
+                                       class="form-control" type="hidden">
+                                <select data-placeholder="--代理人--" name="agentName" id="agentName"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">货款人：</label>
+                            <div class="col-sm-8">
+                                <input id="paymentName" name="paymentName" th:value="${zxgOrder.paymentName}"
+                                       class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注：</label>
+                            <div class="col-sm-8">
+                                <input id="comment" name="comment" th:value="${zxgOrder.comment}" class="form-control"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/zxg/zxgOrder/edit.js">
+</script>
+</body>
+</html>

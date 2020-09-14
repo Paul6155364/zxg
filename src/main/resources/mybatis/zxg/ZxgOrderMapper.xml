@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.zxg.dao.ZxgOrderDao">
+
+    <select id="get" resultType="com.bootdo.zxg.domain.ZxgOrderDO">
+		select `id`,`in_date`,`in_rmk`,`re_date`,`re_rmk`,`status`,`order_id`,`order_categories`,`order_status`,`order_type`,`order_brand`,`product_name`,`product_specifications`,`buy_name`,`buy_phone`,`buy_address`,`sales_amount`,`delivery_courier_fee`,`return_courier_fee`,`message_fee`,`freight_insurance`,`remit_small_money`,`remit_small_name`,`remit_small_reason`,`pay_small_money`,`pay_small_name`,`pay_small_reason`,`many_fee`,`many_fee_ratio`,`other_support`,`other_support_reason`,`fine`,`agent_amount`,`agent_name`,`payment_name`,`profits`,`settlement_id`,`comment` from zxg_order where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.bootdo.zxg.domain.ZxgOrderDO">
+        select
+        t1.`id`,
+        DATE_FORMAT(t1.`in_date`, '%Y-%m-%d') `in_date`,
+        t1.`in_rmk`,
+        DATE_FORMAT(t1.`re_date`, '%Y-%m-%d') `re_date`,
+        t1.`re_rmk`,
+        t1.`status`,
+        t1.`order_id`,
+        CASE t1.order_categories
+        WHEN 0 THEN
+        '虚假订单'
+        WHEN 1 THEN
+        '正常订单'
+        WHEN 2 THEN
+        '售后订单'
+        ELSE
+        '其他'
+        END order_categories,
+        CASE t1.order_status
+        WHEN 0 THEN
+        '刷单'
+        WHEN 1 THEN
+        '待发货'
+        WHEN 2 THEN
+        '已发货'
+        WHEN 3 THEN
+        '已签收'
+        WHEN 4 THEN
+        '未发货退款'
+        WHEN 5 THEN
+        '发货退款'
+        ELSE
+        '其他'
+        END order_status,
+        CASE t1.order_type
+        WHEN 0 THEN
+        '乳清蛋白'
+        WHEN 1 THEN
+        '支链氨基酸'
+        WHEN 2 THEN
+        '左旋肉碱'
+        WHEN 3 THEN
+        '氨基酸'
+        WHEN 4 THEN
+        '谷氨酰胺'
+        WHEN 5 THEN
+        '其他膳食营养补充剂'
+        ELSE
+        '其他'
+        END `order_type`,
+        t1.`order_brand`,
+        t1.`product_name`,
+        t1.`product_specifications`,
+        t1.`buy_name`,
+        t1.`buy_phone`,t1.`buy_address`,
+        t1.`sales_amount`,
+        t1.`delivery_courier_fee`,
+        t1.`return_courier_fee`,
+        t1.`message_fee`,
+        t1.`freight_insurance`,
+        t1.`remit_small_money`,
+        t1.`remit_small_name`,
+        t1.`remit_small_reason`,
+        t1.`pay_small_money`,
+        t1.`pay_small_name`,
+        t1.`pay_small_reason`,
+        t1.`many_fee`,t1.`many_fee_ratio`,
+        t1.`other_support`,
+        t1.`other_support_reason`,
+        t1.`fine`,
+        t1.`agent_amount`,
+        t2.`agent_name` agent_name,
+        t1.`payment_name`,
+        t1.`profits`,
+        CASE t1.`settlement_id`
+        WHEN t1.`settlement_id` IS not NULL THEN
+        '已结算'
+        ELSE
+        '未结算'
+        END settlement_id,
+        t1.`comment`
+        from zxg_order t1 left join zxg_agent t2 on t1.agent_name = t2.agent_id
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="inDate != null and inDate != ''">and in_date = #{inDate}</if>
+            <if test="inRmk != null and inRmk != ''">and in_rmk = #{inRmk}</if>
+            <if test="reDate != null and reDate != ''">and re_date = #{reDate}</if>
+            <if test="reRmk != null and reRmk != ''">and re_rmk = #{reRmk}</if>
+            <if test="status != null and status != ''">and t1.status = #{status}</if>
+            <if test="orderId != null and orderId != ''">and order_id = #{orderId}</if>
+            <if test="orderStatus != null and orderStatus != ''">and order_status = #{orderStatus}</if>
+            <if test="orderType != null and orderType != ''">and order_type = #{orderType}</if>
+            <if test="orderBrand != null and orderBrand != ''">and order_brand = #{orderBrand}</if>
+            <if test="productName != null and productName != ''">and product_name = #{productName}</if>
+            <if test="productSpecifications != null and productSpecifications != ''">and product_specifications =
+                #{productSpecifications}
+            </if>
+            <if test="agentName != null and agentName != ''">and agent_name = #{agentName}</if>
+            <if test="agentAmount != null and agentAmount != ''">and agent_amount = #{agentAmount}</if>
+            <if test="paymentName != null and paymentName != ''">and payment_name = #{paymentName}</if>
+            <if test="salesAmount != null and salesAmount != ''">and sales_amount = #{salesAmount}</if>
+            <if test="messageFee != null and messageFee != ''">and message_fee = #{messageFee}</if>
+            <if test="freightInsurance != null and freightInsurance != ''">and freight_insurance = #{freightInsurance}
+            </if>
+            <if test="smallMoney != null and smallMoney != ''">and small_money = #{smallMoney}</if>
+            <if test="smallName != null and smallName != ''">and small_name = #{smallName}</if>
+            <if test="smallReason != null and smallReason != ''">and small_reason = #{smallReason}</if>
+            <if test="fine != null and fine != ''">and fine = #{fine}</if>
+            <if test="profits != null and profits != ''">and profits = #{profits}</if>
+            <if test="comment != null and comment != ''">and comment = #{comment}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by t1.`in_date` desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from zxg_order
+        <where>
+            <if test="id != null and id != ''"> and id = #{id} </if>
+            <if test="inDate != null and inDate != ''"> and in_date = #{inDate} </if>
+            <if test="inRmk != null and inRmk != ''"> and in_rmk = #{inRmk} </if>
+            <if test="reDate != null and reDate != ''"> and re_date = #{reDate} </if>
+            <if test="reRmk != null and reRmk != ''"> and re_rmk = #{reRmk} </if>
+            <if test="status != null and status != ''"> and status = #{status} </if>
+            <if test="orderId != null and orderId != ''"> and order_id = #{orderId} </if>
+            <if test="orderCategories != null and orderCategories != ''"> and order_categories = #{orderCategories} </if>
+            <if test="orderStatus != null and orderStatus != ''"> and order_status = #{orderStatus} </if>
+            <if test="orderType != null and orderType != ''"> and order_type = #{orderType} </if>
+            <if test="orderBrand != null and orderBrand != ''"> and order_brand = #{orderBrand} </if>
+            <if test="productName != null and productName != ''"> and product_name = #{productName} </if>
+            <if test="productSpecifications != null and productSpecifications != ''"> and product_specifications = #{productSpecifications} </if>
+            <if test="buyName != null and buyName != ''"> and buy_name = #{buyName} </if>
+            <if test="buyPhone != null and buyPhone != ''"> and buy_phone = #{buyPhone} </if>
+            <if test="buyAddress != null and buyAddress != ''"> and buy_address = #{buyAddress} </if>
+            <if test="salesAmount != null and salesAmount != ''"> and sales_amount = #{salesAmount} </if>
+            <if test="deliveryCourierFee != null and deliveryCourierFee != ''"> and delivery_courier_fee = #{deliveryCourierFee} </if>
+            <if test="returnCourierFee != null and returnCourierFee != ''"> and return_courier_fee = #{returnCourierFee} </if>
+            <if test="messageFee != null and messageFee != ''"> and message_fee = #{messageFee} </if>
+            <if test="freightInsurance != null and freightInsurance != ''"> and freight_insurance = #{freightInsurance} </if>
+            <if test="remitSmallMoney != null and remitSmallMoney != ''"> and remit_small_money = #{remitSmallMoney} </if>
+            <if test="remitSmallName != null and remitSmallName != ''"> and remit_small_name = #{remitSmallName} </if>
+            <if test="remitSmallReason != null and remitSmallReason != ''"> and remit_small_reason = #{remitSmallReason} </if>
+            <if test="paySmallMoney != null and paySmallMoney != ''"> and pay_small_money = #{paySmallMoney} </if>
+            <if test="paySmallName != null and paySmallName != ''"> and pay_small_name = #{paySmallName} </if>
+            <if test="paySmallReason != null and paySmallReason != ''"> and pay_small_reason = #{paySmallReason} </if>
+            <if test="manyFee != null and manyFee != ''"> and many_fee = #{manyFee} </if>
+            <if test="manyFeeRatio != null and manyFeeRatio != ''"> and many_fee_ratio = #{manyFeeRatio} </if>
+            <if test="otherSupport != null and otherSupport != ''"> and other_support = #{otherSupport} </if>
+            <if test="otherSupportReason != null and otherSupportReason != ''"> and other_support_reason = #{otherSupportReason} </if>
+            <if test="fine != null and fine != ''"> and fine = #{fine} </if>
+            <if test="agentAmount != null and agentAmount != ''"> and agent_amount = #{agentAmount} </if>
+            <if test="agentName != null and agentName != ''"> and agent_name = #{agentName} </if>
+            <if test="paymentName != null and paymentName != ''"> and payment_name = #{paymentName} </if>
+            <if test="profits != null and profits != ''"> and profits = #{profits} </if>
+            <if test="settlementId != null and settlementId != ''"> and settlement_id = #{settlementId} </if>
+            <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.zxg.domain.ZxgOrderDO">
+		insert into zxg_order
+		(
+			`id`,
+			`in_date`,
+			`in_rmk`,
+			`re_date`,
+			`re_rmk`,
+			`status`,
+			`order_id`,
+			`order_categories`,
+			`order_status`,
+			`order_type`,
+			`order_brand`,
+			`product_name`,
+			`product_specifications`,
+			`buy_name`,
+			`buy_phone`,
+			`buy_address`,
+			`sales_amount`,
+			`delivery_courier_fee`,
+			`return_courier_fee`,
+			`message_fee`,
+			`freight_insurance`,
+			`remit_small_money`,
+			`remit_small_name`,
+			`remit_small_reason`,
+			`pay_small_money`,
+			`pay_small_name`,
+			`pay_small_reason`,
+			`many_fee`,
+			`many_fee_ratio`,
+			`other_support`,
+			`other_support_reason`,
+			`fine`,
+			`agent_amount`,
+			`agent_name`,
+			`payment_name`,
+			`profits`,
+			`settlement_id`,
+			`comment`
+		)
+		values
+		(
+			#{id},
+			#{inDate},
+			#{inRmk},
+			#{reDate},
+			#{reRmk},
+			#{status},
+			#{orderId},
+			#{orderCategories},
+			#{orderStatus},
+			#{orderType},
+			#{orderBrand},
+			#{productName},
+			#{productSpecifications},
+			#{buyName},
+			#{buyPhone},
+			#{buyAddress},
+			#{salesAmount},
+			#{deliveryCourierFee},
+			#{returnCourierFee},
+			#{messageFee},
+			#{freightInsurance},
+			#{remitSmallMoney},
+			#{remitSmallName},
+			#{remitSmallReason},
+			#{paySmallMoney},
+			#{paySmallName},
+			#{paySmallReason},
+			#{manyFee},
+			#{manyFeeRatio},
+			#{otherSupport},
+			#{otherSupportReason},
+			#{fine},
+			#{agentAmount},
+			#{agentName},
+			#{paymentName},
+			#{profits},
+			#{settlementId},
+			#{comment}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.bootdo.zxg.domain.ZxgOrderDO">
+        update zxg_order
+        <set>
+            <if test="inDate != null">`in_date` = #{inDate}, </if>
+            <if test="inRmk != null">`in_rmk` = #{inRmk}, </if>
+            <if test="reDate != null">`re_date` = #{reDate}, </if>
+            <if test="reRmk != null">`re_rmk` = #{reRmk}, </if>
+            <if test="status != null">`status` = #{status}, </if>
+            <if test="orderId != null">`order_id` = #{orderId}, </if>
+            <if test="orderCategories != null">`order_categories` = #{orderCategories}, </if>
+            <if test="orderStatus != null">`order_status` = #{orderStatus}, </if>
+            <if test="orderType != null">`order_type` = #{orderType}, </if>
+            <if test="orderBrand != null">`order_brand` = #{orderBrand}, </if>
+            <if test="productName != null">`product_name` = #{productName}, </if>
+            <if test="productSpecifications != null">`product_specifications` = #{productSpecifications}, </if>
+            <if test="buyName != null">`buy_name` = #{buyName}, </if>
+            <if test="buyPhone != null">`buy_phone` = #{buyPhone}, </if>
+            <if test="buyAddress != null">`buy_address` = #{buyAddress}, </if>
+            <if test="salesAmount != null">`sales_amount` = #{salesAmount}, </if>
+            <if test="deliveryCourierFee != null">`delivery_courier_fee` = #{deliveryCourierFee}, </if>
+            <if test="returnCourierFee != null">`return_courier_fee` = #{returnCourierFee}, </if>
+            <if test="messageFee != null">`message_fee` = #{messageFee}, </if>
+            <if test="freightInsurance != null">`freight_insurance` = #{freightInsurance}, </if>
+            <if test="remitSmallMoney != null">`remit_small_money` = #{remitSmallMoney}, </if>
+            <if test="remitSmallName != null">`remit_small_name` = #{remitSmallName}, </if>
+            <if test="remitSmallReason != null">`remit_small_reason` = #{remitSmallReason}, </if>
+            <if test="paySmallMoney != null">`pay_small_money` = #{paySmallMoney}, </if>
+            <if test="paySmallName != null">`pay_small_name` = #{paySmallName}, </if>
+            <if test="paySmallReason != null">`pay_small_reason` = #{paySmallReason}, </if>
+            <if test="manyFee != null">`many_fee` = #{manyFee}, </if>
+            <if test="manyFeeRatio != null">`many_fee_ratio` = #{manyFeeRatio}, </if>
+            <if test="otherSupport != null">`other_support` = #{otherSupport}, </if>
+            <if test="otherSupportReason != null">`other_support_reason` = #{otherSupportReason}, </if>
+            <if test="fine != null">`fine` = #{fine}, </if>
+            <if test="agentAmount != null">`agent_amount` = #{agentAmount}, </if>
+            <if test="agentName != null">`agent_name` = #{agentName}, </if>
+            <if test="paymentName != null">`payment_name` = #{paymentName}, </if>
+            <if test="profits != null">`profits` = #{profits}, </if>
+            <if test="settlementId != null">`settlement_id` = #{settlementId}, </if>
+            <if test="comment != null">`comment` = #{comment}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="remove">
+		 update zxg_order
+    set
+      re_date = now(),
+      `status` = b'0' where id = #{value}
+	</update>
+
+    <delete id="batchRemove">
+        delete from zxg_order where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="getZxgOrder" resultType="com.bootdo.zxg.domain.ZxgOrderDO">
+        SELECT * FROM zxg_order WHERE in_date <![CDATA[ >= ]]> #{settlementDateStart} AND in_date <![CDATA[ <= ]]> #{settlementDateEnd} AND settlement_id is  null ORDER BY in_date
+    </select>
+    <update id="updateZxgOrder">
+    update zxg_order set settlement_id = #{settlementId} where in_date <![CDATA[ >= ]]> #{settlementDateStart} AND in_date <![CDATA[ <= ]]> #{settlementDateEnd} AND settlement_id is  null
+    </update>
+    <select id="getZxgOrderName" resultType="com.bootdo.zxg.domain.ZxgOrderDO">
+        SELECT * FROM zxg_order WHERE `buy_name` = #{buyName} AND order_status = '0' ORDER BY in_date
+    </select>
+</mapper>

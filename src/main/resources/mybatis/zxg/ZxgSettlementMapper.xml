@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.zxg.dao.ZxgSettlementDao">
+
+	<select id="get" resultType="com.bootdo.zxg.domain.ZxgSettlementDO">
+		select `id`,`in_date`,`in_rmk`,`re_date`,`re_rmk`,`status`,`settlement_date_start`,`settlement_date_end`,`settlement_id`,`settlement_name`,`settlement_fee`,`payment_fee`,`delivery_courier_fee`,`return_courier_fee`,`message_fee`,`freight_fee`,`remit_small_fee`,`pay_small_fee`,`fine_fee`,`many_fee`,`other_fee`,`brush_fee`,`marketing_fee`,`profits_fee`,`settlement_results`,`comment` from zxg_settlement where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.zxg.domain.ZxgSettlementDO">
+		select `id`,`in_date`,`in_rmk`,`re_date`,`re_rmk`,`status`,`settlement_date_start`,`settlement_date_end`,`settlement_id`,`settlement_name`,`settlement_fee`,`payment_fee`,`delivery_courier_fee`,`return_courier_fee`,`message_fee`,`freight_fee`,`remit_small_fee`,`pay_small_fee`,`fine_fee`,`many_fee`,`other_fee`,`brush_fee`,`marketing_fee`,`profits_fee`,`settlement_results`,`comment` from zxg_settlement
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="inDate != null and inDate != ''"> and in_date = #{inDate} </if>
+		  		  <if test="inRmk != null and inRmk != ''"> and in_rmk = #{inRmk} </if>
+		  		  <if test="reDate != null and reDate != ''"> and re_date = #{reDate} </if>
+		  		  <if test="reRmk != null and reRmk != ''"> and re_rmk = #{reRmk} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="settlementDateStart != null and settlementDateStart != ''"> and settlement_date_start = #{settlementDateStart} </if>
+		  		  <if test="settlementDateEnd != null and settlementDateEnd != ''"> and settlement_date_end = #{settlementDateEnd} </if>
+		  		  <if test="settlementId != null and settlementId != ''"> and settlement_id = #{settlementId} </if>
+		  		  <if test="settlementName != null and settlementName != ''"> and settlement_name = #{settlementName} </if>
+		  		  <if test="settlementFee != null and settlementFee != ''"> and settlement_fee = #{settlementFee} </if>
+		  		  <if test="paymentFee != null and paymentFee != ''"> and payment_fee = #{paymentFee} </if>
+		  		  <if test="deliveryCourierFee != null and deliveryCourierFee != ''"> and delivery_courier_fee = #{deliveryCourierFee} </if>
+		  		  <if test="returnCourierFee != null and returnCourierFee != ''"> and return_courier_fee = #{returnCourierFee} </if>
+		  		  <if test="messageFee != null and messageFee != ''"> and message_fee = #{messageFee} </if>
+		  		  <if test="freightFee != null and freightFee != ''"> and freight_fee = #{freightFee} </if>
+		  		  <if test="remitSmallFee != null and remitSmallFee != ''"> and remit_small_fee = #{remitSmallFee} </if>
+		  		  <if test="paySmallFee != null and paySmallFee != ''"> and pay_small_fee = #{paySmallFee} </if>
+		  		  <if test="fineFee != null and fineFee != ''"> and fine_fee = #{fineFee} </if>
+		  		  <if test="manyFee != null and manyFee != ''"> and many_fee = #{manyFee} </if>
+		  		  <if test="otherFee != null and otherFee != ''"> and other_fee = #{otherFee} </if>
+		  		  <if test="brushFee != null and brushFee != ''"> and brush_fee = #{brushFee} </if>
+		  		  <if test="profitsFee != null and profitsFee != ''"> and profits_fee = #{profitsFee} </if>
+		  		  <if test="settlementResults != null and settlementResults != ''"> and settlement_results = #{settlementResults} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by in_date desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from zxg_settlement
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="inDate != null and inDate != ''"> and in_date = #{inDate} </if>
+		  		  <if test="inRmk != null and inRmk != ''"> and in_rmk = #{inRmk} </if>
+		  		  <if test="reDate != null and reDate != ''"> and re_date = #{reDate} </if>
+		  		  <if test="reRmk != null and reRmk != ''"> and re_rmk = #{reRmk} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="settlementDateStart != null and settlementDateStart != ''"> and settlement_date_start = #{settlementDateStart} </if>
+		  		  <if test="settlementDateEnd != null and settlementDateEnd != ''"> and settlement_date_end = #{settlementDateEnd} </if>
+		  		  <if test="settlementId != null and settlementId != ''"> and settlement_id = #{settlementId} </if>
+		  		  <if test="settlementName != null and settlementName != ''"> and settlement_name = #{settlementName} </if>
+		  		  <if test="settlementFee != null and settlementFee != ''"> and settlement_fee = #{settlementFee} </if>
+		  		  <if test="paymentFee != null and paymentFee != ''"> and payment_fee = #{paymentFee} </if>
+		  		  <if test="deliveryCourierFee != null and deliveryCourierFee != ''"> and delivery_courier_fee = #{deliveryCourierFee} </if>
+		  		  <if test="returnCourierFee != null and returnCourierFee != ''"> and return_courier_fee = #{returnCourierFee} </if>
+		  		  <if test="messageFee != null and messageFee != ''"> and message_fee = #{messageFee} </if>
+		  		  <if test="freightFee != null and freightFee != ''"> and freight_fee = #{freightFee} </if>
+		  		  <if test="remitSmallFee != null and remitSmallFee != ''"> and remit_small_fee = #{remitSmallFee} </if>
+		  		  <if test="paySmallFee != null and paySmallFee != ''"> and pay_small_fee = #{paySmallFee} </if>
+		  		  <if test="fineFee != null and fineFee != ''"> and fine_fee = #{fineFee} </if>
+		  		  <if test="manyFee != null and manyFee != ''"> and many_fee = #{manyFee} </if>
+		  		  <if test="otherFee != null and otherFee != ''"> and other_fee = #{otherFee} </if>
+		  		  <if test="brushFee != null and brushFee != ''"> and brush_fee = #{brushFee} </if>
+		  		  <if test="profitsFee != null and profitsFee != ''"> and profits_fee = #{profitsFee} </if>
+		  		  <if test="settlementResults != null and settlementResults != ''"> and settlement_results = #{settlementResults} </if>
+		  		  <if test="comment != null and comment != ''"> and comment = #{comment} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.zxg.domain.ZxgSettlementDO">
+		insert into zxg_settlement
+		(
+			`id`, 
+			`in_date`, 
+			`in_rmk`, 
+			`re_date`, 
+			`re_rmk`, 
+			`status`, 
+			`settlement_date_start`, 
+			`settlement_date_end`, 
+			`settlement_id`, 
+			`settlement_name`, 
+			`settlement_fee`, 
+			`payment_fee`, 
+			`delivery_courier_fee`, 
+			`return_courier_fee`, 
+			`message_fee`, 
+			`freight_fee`, 
+			`remit_small_fee`, 
+			`pay_small_fee`, 
+			`fine_fee`, 
+			`many_fee`, 
+			`other_fee`, 
+			`brush_fee`,
+			`marketing_fee`,
+			`profits_fee`, 
+			`settlement_results`, 
+			`comment`
+		)
+		values
+		(
+			#{id}, 
+			#{inDate}, 
+			#{inRmk}, 
+			#{reDate}, 
+			#{reRmk}, 
+			#{status}, 
+			#{settlementDateStart}, 
+			#{settlementDateEnd}, 
+			#{settlementId}, 
+			#{settlementName}, 
+			#{settlementFee}, 
+			#{paymentFee}, 
+			#{deliveryCourierFee}, 
+			#{returnCourierFee}, 
+			#{messageFee}, 
+			#{freightFee}, 
+			#{remitSmallFee}, 
+			#{paySmallFee}, 
+			#{fineFee}, 
+			#{manyFee}, 
+			#{otherFee}, 
+			#{brushFee},
+			#{marketingFee},
+			#{profitsFee}, 
+			#{settlementResults}, 
+			#{comment}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.zxg.domain.ZxgSettlementDO">
+		update zxg_settlement 
+		<set>
+			<if test="inDate != null">`in_date` = #{inDate}, </if>
+			<if test="inRmk != null">`in_rmk` = #{inRmk}, </if>
+			<if test="reDate != null">`re_date` = #{reDate}, </if>
+			<if test="reRmk != null">`re_rmk` = #{reRmk}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="settlementDateStart != null">`settlement_date_start` = #{settlementDateStart}, </if>
+			<if test="settlementDateEnd != null">`settlement_date_end` = #{settlementDateEnd}, </if>
+			<if test="settlementId != null">`settlement_id` = #{settlementId}, </if>
+			<if test="settlementName != null">`settlement_name` = #{settlementName}, </if>
+			<if test="settlementFee != null">`settlement_fee` = #{settlementFee}, </if>
+			<if test="paymentFee != null">`payment_fee` = #{paymentFee}, </if>
+			<if test="deliveryCourierFee != null">`delivery_courier_fee` = #{deliveryCourierFee}, </if>
+			<if test="returnCourierFee != null">`return_courier_fee` = #{returnCourierFee}, </if>
+			<if test="messageFee != null">`message_fee` = #{messageFee}, </if>
+			<if test="freightFee != null">`freight_fee` = #{freightFee}, </if>
+			<if test="remitSmallFee != null">`remit_small_fee` = #{remitSmallFee}, </if>
+			<if test="paySmallFee != null">`pay_small_fee` = #{paySmallFee}, </if>
+			<if test="fineFee != null">`fine_fee` = #{fineFee}, </if>
+			<if test="manyFee != null">`many_fee` = #{manyFee}, </if>
+			<if test="otherFee != null">`other_fee` = #{otherFee}, </if>
+			<if test="brushFee != null">`brush_fee` = #{brushFee}, </if>
+			<if test="profitsFee != null">`profits_fee` = #{profitsFee}, </if>
+			<if test="settlementResults != null">`settlement_results` = #{settlementResults}, </if>
+			<if test="comment != null">`comment` = #{comment}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from zxg_settlement where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from zxg_settlement where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
