@@ -25,6 +25,7 @@
         <mybatisplus-spring-boot-starter.version>1.0.4</mybatisplus-spring-boot-starter.version>
         <velocity.version>1.7</velocity.version>
         <activiti.version>5.22.0</activiti.version>
+        <hfyz.path>${project.build.directory}/bootdo</hfyz.path>
     </properties>
 
     <dependencies>
@@ -268,10 +269,120 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                            <filesets>
+                                <fileset>
+                                    <directory>${hfyz.path}</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--3、打包自己的项目为jar并放入lib目录，不包含依赖。-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <executable>true</executable>
+                    <finalName>bootdo</finalName>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <!--MANIFEST.MF 中 Class-Path 加入前缀-->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!--jar包不包含唯一版本标识-->
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <mainClass>com.bootdo.BootdoApplication</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>../config/</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <!--不打包资源文件-->
+                    <excludes>
+                        <exclude>*.yml</exclude>
+                        <exclude>*.properties</exclude>
+                        <exclude>*.xml</exclude>
+                        <exclude>*.txt</exclude>
+                    </excludes>
+                    <outputDirectory>${hfyz.path}/</outputDirectory>
+                </configuration>
+            </plugin>
+            <!--4、将项目依赖的jar，复制到lib目录。-->
+            <!--拷贝依赖 copy-dependencies-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${hfyz.path}/lib/
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--5、将项目resources下的文件，复制到config下。将bin下的启动脚本复制到打包目录，可根据自己的需求修改。-->
+            <!--拷贝资源文件 copy-resources-->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${hfyz.path}/config</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <!--copy 脚本，把bin目录下的文件复制到，打包目录下-->
+                    <execution>
+                        <id>copy-bin</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>bin/</directory>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${hfyz.path}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--6、跳过测试-->
+            <!--maven打包时，跳过测试-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>
